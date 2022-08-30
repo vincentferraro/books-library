@@ -1,0 +1,46 @@
+[
+    {
+        "id" : 1,
+        "author" :  "Paulo Coelho",
+        "title" : "The Alchemist",
+        "year" : 1988,
+        "pages" : 208,
+        "genres" : ["fantasy","adventure"]
+    },
+    {
+        "id" : 2,
+        "author" :  "Paulo Coelho",
+        "title" : "Manual of the Warrior of Light",
+        "year" : 1997,
+        "pages" : 191,
+        "genres" : ["fantasy","adventure","spiritual"]
+    },
+    {   
+        "id" : 3,
+        "author" :  "Jim Kwik",
+        "title" : "Limitless: Upgrade Your Brain, Learn Anything Faster, and Unlock Your Exceptional Life",
+        "year" : 2020,
+        "pages" : 346,
+        "genres" : ["personal development"]
+    },
+    {
+        "id" : 4,
+        "author" :  "Anthony Robbins",
+        "title" : "Unlimited Power",
+        "year" : 1986,
+        "pages" : 604,
+        "genres" : ["personal development"]
+    },
+    {
+        "id" : 5,
+        "author" :  "John Medina",
+        "title" : "Brain Rules",
+        "year" : 2008,
+        "pages" : 650,
+        "genres" : ["brain","science"]
+    }
+    
+
+
+    
+]
