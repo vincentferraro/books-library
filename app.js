@@ -71,6 +71,35 @@ app.delete('/api/books/:id',(req,res)=>{
     }
 })
 
+//PUT
+console.log(books.length)
+app.put('/api/books/:id', (req,res)=>{
+    
+    let id=parseInt(req.params.id)
+    console.log(id)
+    if(id<books.length){
+        const bookUpdated=books.find((book)=>{
+            if(book.id===id){
+                book.author=req.body.author
+                book.title=req.body.title
+                book.year=req.body.year
+                book.pages=req.body.pages
+                book.genres=req.body.genres
+                return book
+            }
+        })
+        
+        console.log(bookUpdated)
+        const message= `Livre n°${bookUpdated.id} mis à jour`
+        res.json(success(message,bookUpdated))
+        
+    }else{
+        const message="Livre introuvable"
+        res.json(fail(message))
+    }
+    
+})
+
 
 app.use((req,res,next)=>{
     res.status(404).send('Page introuvable!!!!')
