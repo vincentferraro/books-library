@@ -1,18 +1,19 @@
 const { success, fail } = require('./helper')
+
+
 const express = require('express')
 var bodyParser = require('body-parser')
 const fs = require('fs')
 const morgan = require('morgan')
-//const booksdata=fs.readFileSync('./mock-books.json')
-const port = 3000 
 
+
+const port = 3000 
 const app = express()
 
 let books= require('./mock-books.json')
 
 
-app
-    .use(morgan("tiny"))
+app.use(morgan("tiny"))
     .use((req,res,next)=>{
         console.log("Time:", new Date().toLocaleDateString())
         next()
@@ -36,9 +37,11 @@ app.get('/api/books/:id',(req,res)=>{
     const book=books.find(book => book.id === id)
     if(book){
         const message = `Ci dessous le livre n°${id}`
-    res.send(success(message,book))
+        
+        res.status(200).send(success(message,book))
     }else{
-        res.json(fail("Le numéro de livre est inexistant"))
+    
+        res.status(404).json(fail("Le numéro de livre est inexistant"))
     }
 })
 
@@ -61,20 +64,21 @@ app.post('/api/books',(req,res)=>{
 app.delete('/api/books/:id',(req,res)=>{
     let id = parseInt(req.params.id)
     if(id>books.length){
-        res.json(fail("ID introuvable"))
+        
+        res.status(404).json(fail("ID introuvable"))
     }
     else{
         let newBooksArray= books.filter((book)=> book.id!==id)
         books=newBooksArray
         const message = `Livre supprimé`
-        res.json(success(message,message))
+        
+        res.status(200).json(success(message,message))
     }
 })
 
 //PUT
-console.log(books.length)
+
 app.put('/api/books/:id', (req,res)=>{
-    
     let id=parseInt(req.params.id)
     console.log(id)
     if(id<books.length){
@@ -88,14 +92,13 @@ app.put('/api/books/:id', (req,res)=>{
                 return book
             }
         })
-        
-        console.log(bookUpdated)
+
         const message= `Livre n°${bookUpdated.id} mis à jour`
-        res.json(success(message,bookUpdated))
+        res.status(200).json(success(message,bookUpdated))
         
     }else{
         const message="Livre introuvable"
-        res.json(fail(message))
+        res.status(404).json(fail(message))
     }
     
 })
@@ -108,3 +111,5 @@ app.use((req,res,next)=>{
 app.listen(port,()=>{
     console.log(`Serveur ON sur: http://127.0.0.1:3000`)
 })
+
+
