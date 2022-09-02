@@ -1,5 +1,6 @@
-const { Sequelize } = require('sequelize')
-
+const { Sequelize, DataTypes } = require('sequelize')
+const bookModel = require('../models/BookModel')
+const books = require('../../mock-books.json')
 const sequelize = new Sequelize(
     'books_library',
     'username',
@@ -25,3 +26,19 @@ async function Connect(){
 }
 
 Connect()
+
+const Book = bookModel(sequelize, DataTypes)
+Book.sync({force : true}). then(()=>{
+        console.log(`BDD "Books" synchronisée`)
+        books.map((book)=>{
+            Book.create({
+                "author" :  book.author,
+                "title" : book.title,
+                "year" : book.year,
+                "pages" : book.pages,
+                "genres" : book.genres.join()
+            })
+        })
+        console.log("Tables ajoutées")
+        })
+
