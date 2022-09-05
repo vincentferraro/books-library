@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const  bookModel = require('../models/BookModel')
-//const bookModel = require('../models/BookModel')
+
 const books = require('../../mock-books.json')
 
 
@@ -48,9 +48,8 @@ const InitDb = ()=>{
     console.log("BDD synchronisée")
 }
 
-InitDb()
 
 
-/*module.exports = {
+module.exports = {
     Connect, InitDb, Book
-}*/
+}

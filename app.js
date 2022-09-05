@@ -1,17 +1,23 @@
 const { success, fail } = require('./helper')
 
-
 const express = require('express')
 var bodyParser = require('body-parser')
 const fs = require('fs')
 const morgan = require('morgan')
 
 
+let sequelize = require('./src/db/sequelize')
+
+
 const port = 3000 
 const app = express()
 
-let books= require('./mock-books.json')
 
+sequelize.Connect()
+
+sequelize.InitDb()
+
+// MIDDLEWARES
 
 app.use(morgan("tiny"))
     .use((req,res,next)=>{
