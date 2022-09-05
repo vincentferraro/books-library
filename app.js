@@ -30,11 +30,24 @@ app.use(morgan("tiny"))
 app.get('/api/books',(req,res)=>{      
        const books = async()=> await Book.findAll()
         books().then(value => {
-            console.log(value)
             res.json(value)
         })
 })
 
+app.get('/api/books/:id',(req,res)=>{
+    let id = parseInt(req.params.id)
+    const books = async()=> await Book.findAll({
+        raw : true,
+        where : {
+            id : id
+        }
+    })
+    books().then(value=> {
+                            console.log(value)
+                            res.json(value)
+                            })
+            //.catch(res.json(fail("ID inconnu")))
+})
 //POST
 
 app.post('/api/books',(req,res)=>{
