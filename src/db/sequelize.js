@@ -45,7 +45,7 @@ const InitDb = ()=>{
             })
         })   
     })
-    console.log("BDD synchronisée")
+    console.log("BDD initialisée")
 }
 
 

@@ -7,15 +7,13 @@ const morgan = require('morgan')
 
 
 let sequelize = require('./src/db/sequelize')
-
+const Book = require('./src/db/sequelize').Book
 
 const port = 3000 
 const app = express()
 
 
 sequelize.Connect()
-
-sequelize.InitDb()
 
 // MIDDLEWARES
 
@@ -29,26 +27,12 @@ app.use(morgan("tiny"))
 
 //GET METHODS
 
-app.get('/api',(req,res)=>{
-    res.send('Server On!')
-})
-
-app.get('/api/books',(req,res)=>{
-    const message="Voici la liste des livres"
-    res.json(success(message,books))
-   } )
-
-app.get('/api/books/:id',(req,res)=>{
-    const id=parseInt(req.params.id)
-    const book=books.find(book => book.id === id)
-    if(book){
-        const message = `Ci dessous le livre n°${id}`
-        
-        res.status(200).send(success(message,book))
-    }else{
-    
-        res.status(404).json(fail("Le numéro de livre est inexistant"))
-    }
+app.get('/api/books',(req,res)=>{      
+       const books = async()=> await Book.findAll()
+        books().then(value => {
+            console.log(value)
+            res.json(value)
+        })
 })
 
 //POST
