@@ -1,44 +1,56 @@
 const { Sequelize, DataTypes } = require('sequelize')
-const bookModel = require('../models/BookModel')
+const  bookModel = require('../models/BookModel')
+//const bookModel = require('../models/BookModel')
 const books = require('../../mock-books.json')
-const sequelize = new Sequelize(
-    'books_library',
-    'username',
-    ' ',
-    {
-        host : '192.168.64.2',
-        dialect : 'mariadb',
-        dialectOptions : {
-            timezone : 'Etc/GMT-2'
+
+
+ let sequelize = new Sequelize(
+        'books_library',
+        'username',
+        ' ',
+        {
+            host : '192.168.64.2',
+            dialect : 'mariadb',
+            dialectOptions : {
+                timezone : 'Etc/GMT-2'
+            },
+            logging : false
         },
-        logging : false
-    },
     
 )
+        
+    
 
-async function Connect(){
+ const Connect = ()=>{
     try{
-        await sequelize.authenticate()
+        sequelize.authenticate()
         console.log("Connection OK")
     } catch (error){
-        console.error("NO OK",error)
+        console.log("NOT OK Connection")
     }
 }
 
-Connect()
+const Book=bookModel(sequelize, DataTypes)
 
-const Book = bookModel(sequelize, DataTypes)
-Book.sync({force : true}). then(()=>{
-        console.log(`BDD "Books" synchronisée`)
+const InitDb = ()=>{
+    Book.sync({ force : true}).then(()=>{
+        
         books.map((book)=>{
             Book.create({
-                "author" :  book.author,
+                "author" : book.author,
                 "title" : book.title,
                 "year" : book.year,
                 "pages" : book.pages,
-                "genres" : book.genres.join()
+                "genres" : book.genres
             })
-        })
-        console.log("Tables ajoutées")
-        })
+        })   
+    })
+    console.log("BDD synchronisée")
+}
 
+InitDb()
+
+
+/*module.exports = {
+    Connect, InitDb, Book
+}*/
