@@ -36,17 +36,21 @@ app.get('/api/books',(req,res)=>{
 
 app.get('/api/books/:id',(req,res)=>{
     let id = parseInt(req.params.id)
-    const books = async()=> await Book.findAll({
+    const books = async()=> await Book.findOne({
         raw : true,
         where : {
             id : id
-        }
-    })
-    books().then(value=> {
-                            console.log(value)
-                            res.json(value)
-                            })
-            //.catch(res.json(fail("ID inconnu")))
+        }  })
+        console.log(books())
+        books().then(value => {
+                            if(value){
+                                console.log(value)
+                                res.json(success("Livre trouvé", value))
+                            }else{
+                                console.log(value)
+                                res.json(fail("Livre introuvable"))
+                            }
+                            })         
 })
 //POST
 
