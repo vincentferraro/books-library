@@ -54,8 +54,8 @@ app.get('/api/books/:id',(req,res)=>{
 })
 //POST
 
-app.post('/api/books',(req,res)=>{
-    let id= books.length+1
+app.post('/api/books/',(req,res)=>{
+    
     let bookCreated={...req.body,...{id : id}}
     books.push(bookCreated)
     const message = `Livre ${bookCreated.title} crée`
@@ -86,28 +86,47 @@ app.delete('/api/books/:id',(req,res)=>{
 //PUT
 
 app.put('/api/books/:id', (req,res)=>{
-    let id=parseInt(req.params.id)
-    console.log(id)
-    if(id<books.length){
-        const bookUpdated=books.find((book)=>{
-            if(book.id===id){
-                book.author=req.body.author
-                book.title=req.body.title
-                book.year=req.body.year
-                book.pages=req.body.pages
-                book.genres=req.body.genres
-                return book
-            }
+
+    
+    let id= parseInt(req.params.id)
+    let bookToUpdate = req.body
+
+    //function 
+
+    const bookUpdated = async()=>{
+        await Book.update({
+            author : bookToUpdate.author,
+            title : bookToUpdate.title,
+            year : bookToUpdate.year,
+            pages : bookToUpdate.pages,
+            genres : bookToUpdate.genres
+        },{
+            returning : true,
+            plain : true,
+            where :{
+                id : id
+            } 
+        })
+    }
+
+    const books = async()=> await Book.findOne({
+        raw : true ,
+        where : {
+            id : id
+        }
         })
 
-        const message= `Livre n°${bookUpdated.id} mis à jour`
-        res.status(200).json(success(message,bookUpdated))
-        
-    }else{
-        const message="Livre introuvable"
-        res.status(404).json(fail(message))
-    }
-    
+    books().then( resolve =>{
+        if(resolve == null){
+            res.json(fail("Livre non trouvé"))
+            
+        }else{
+            
+            bookUpdated().then(()=>{
+                res.json(success(`Livre n° ${id} modifié avec succès`))
+            })  
+        }
+    })
 })
 
 
