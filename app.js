@@ -15,6 +15,7 @@ const app = express()
 
 sequelize.Connect()
 
+
 // MIDDLEWARES
 
 app.use(morgan("tiny"))
@@ -36,51 +37,66 @@ app.get('/api/books',(req,res)=>{
 
 app.get('/api/books/:id',(req,res)=>{
     let id = parseInt(req.params.id)
-    const books = async()=> await Book.findOne({
-        raw : true,
-        where : {
-            id : id
-        }  })
-        console.log(books())
-        books().then(value => {
-                            if(value){
-                                console.log(value)
-                                res.json(success("Livre trouvé", value))
-                            }else{
-                                console.log(value)
-                                res.json(fail("Livre introuvable"))
-                            }
-                            })         
+    const books = async()=> {
+        return await Book.findOne({
+            raw : true,
+            where : {
+                id : id
+            }  })
+        } 
+    console.log(books())
+    books().then(value => { 
+                        if(value){
+                            console.log(value)
+                            res.json(success("Livre trouvé", value))
+                        }else{
+                            console.log(value)
+                            res.json(fail("Livre introuvable"))
+                        }
+                        })
+           
 })
 //POST
 
 app.post('/api/books/',(req,res)=>{
     
-    let bookCreated={...req.body,...{id : id}}
-    books.push(bookCreated)
-    const message = `Livre ${bookCreated.title} crée`
-    /*fs.writeFile(booksdata, JSON.stringify(bookCreated),(err)=>{
-        if (err) throw err
-        console.log(books.length)
-    })*/
-    res.json(success(message,bookCreated))
+    let book={...req.body}
+    let bookCreated = async()=>{
+        return await Book.create({
+            author : book.author,
+            title : book.title,
+            year : book.year,
+            pages : book.pages,
+            genres : book.genres
+        },
+        {   
+            
+            returning : true
+        })
+    }
+
+    
+    bookCreated().then( value =>
+                { console.log(value)
+                    res.json(value)
+                })
+                .catch( err => {console.log(err)
+                                res.json(err)})
 })
 
 //PUT
 
 app.delete('/api/books/:id',(req,res)=>{
     let id = parseInt(req.params.id)
-    if(id>books.length){
-        
-        res.status(404).json(fail("ID introuvable"))
+    let bookDeleted = async ()=>{
+        return await Book.destroy({
+            where : {
+                id : id
+            }
+        })
     }
-    else{
-        let newBooksArray= books.filter((book)=> book.id!==id)
-        books=newBooksArray
-        const message = `Livre supprimé`
-        
-        res.status(200).json(success(message,message))
-    }
+    bookDeleted()
+    res.json(success(`Livre supprimé`))
 })
 
 //PUT

@@ -32,6 +32,7 @@ module.exports = (sequelize,DataTypes)=>{
             },
             set(value){
                 this.setDataValue('genres',value.join(','))
+                return this.getDataValue()
             }
         },
         
