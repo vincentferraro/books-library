@@ -5,6 +5,7 @@ const userModel = require('../models/User')
 const books = require('../../mock-books.json')
 
 
+
  let sequelize = new Sequelize(
         'books_library',
         'username',
