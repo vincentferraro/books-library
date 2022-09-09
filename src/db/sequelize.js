@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const  bookModel = require('../models/BookModel')
+const userModel = require('../models/User')
 
 const books = require('../../mock-books.json')
 
@@ -48,8 +49,15 @@ const InitDb = ()=>{
     console.log("BDD initialisée")
 }
 
+// USER SEQUELIZE
 
+const User = userModel(sequelize,DataTypes)
 
+const initDbUser = () => {
+    User.sync({ force: true }).then(e => console.log(`Table User crée avec succès`,e))
+                                .catch( err => console.log(`Erreur lors de la création de la table`,err))
+    
+}
 module.exports = {
-    Connect, InitDb, Book
+    Connect, InitDb, Book, initDbUser, User
 }

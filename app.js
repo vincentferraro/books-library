@@ -2,153 +2,44 @@ const { success, fail } = require('./helper')
 
 const express = require('express')
 var bodyParser = require('body-parser')
-const fs = require('fs')
+
 const morgan = require('morgan')
 
 
 let sequelize = require('./src/db/sequelize')
 const Book = require('./src/db/sequelize').Book
+const User = require('./src/db/sequelize').User
 
 const port = 3000 
 const app = express()
 
+//Sequelize
 
 sequelize.Connect()
-
+//sequelize.initDbUser()
 
 // MIDDLEWARES
 
-app.use(morgan("tiny"))
-    .use((req,res,next)=>{
+app.use(morgan("tiny")).use((req,res,next)=>{
         console.log("Time:", new Date().toLocaleDateString())
         next()
-    })
+        })
     .use(bodyParser.json())
     
+// MODULES
 
-//GET METHODS
+require('./routes/showBook')(app, Book)
+require('./routes/showBookById')(app, Book, success, fail)
+require('./routes/createBook')(app, Book)
+require('./routes/deleteBook')(app, Book, success)
+require('./routes/updateBook')(app,Book,success, fail)
 
-app.get('/api/books',(req,res)=>{      
-       const books = async()=> await Book.findAll()
-        books().then(value => {
-            res.json(value)
-        })
-})
-
-app.get('/api/books/:id',(req,res)=>{
-    let id = parseInt(req.params.id)
-    const books = async()=> {
-        return await Book.findOne({
-            raw : true,
-            where : {
-                id : id
-            }  })
-        } 
-    console.log(books())
-    books().then(value => { 
-                        if(value){
-                            console.log(value)
-                            res.json(success("Livre trouvé", value))
-                        }else{
-                            console.log(value)
-                            res.json(fail("Livre introuvable"))
-                        }
-                        })
-           
-})
-//POST
-
-app.post('/api/books/',(req,res)=>{
-    
-    let book={...req.body}
-    let bookCreated = async()=>{
-        return await Book.create({
-            author : book.author,
-            title : book.title,
-            year : book.year,
-            pages : book.pages,
-            genres : book.genres
-        },
-        {   
-            
-            returning : true
-        })
-    }
-
-    
-    bookCreated().then( value =>
-                { console.log(value)
-                    res.json(value)
-                })
-                .catch( err => {console.log(err)
-                                res.json(err)})
-})
-
-//PUT
-
-app.delete('/api/books/:id',(req,res)=>{
-    let id = parseInt(req.params.id)
-    let bookDeleted = async ()=>{
-        return await Book.destroy({
-            where : {
-                id : id
-            }
-        })
-    }
-    bookDeleted()
-    res.json(success(`Livre supprimé`))
-})
-
-//PUT
-
-app.put('/api/books/:id', (req,res)=>{
-
-    
-    let id= parseInt(req.params.id)
-    let bookToUpdate = req.body
-
-    //function 
-
-    const bookUpdated = async()=>{
-        await Book.update({
-            author : bookToUpdate.author,
-            title : bookToUpdate.title,
-            year : bookToUpdate.year,
-            pages : bookToUpdate.pages,
-            genres : bookToUpdate.genres
-        },{
-            returning : true,
-            plain : true,
-            where :{
-                id : id
-            } 
-        })
-    }
-
-    const books = async()=> await Book.findOne({
-        raw : true ,
-        where : {
-            id : id
-        }
-        })
-
-    books().then( resolve =>{
-        if(resolve == null){
-            res.json(fail("Livre non trouvé"))
-            
-        }else{
-            
-            bookUpdated().then(()=>{
-                res.json(success(`Livre n° ${id} modifié avec succès`))
-            })  
-        }
-    })
-})
-
-
+//ERROR
 app.use((req,res,next)=>{
     res.status(404).send('Page introuvable!!!!')
 })
+
+// LISTEN
 
 app.listen(port,()=>{
     console.log(`Serveur ON sur: http://127.0.0.1:3000`)
