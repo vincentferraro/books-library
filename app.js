@@ -55,7 +55,7 @@ require('./routes/showBookById')(app, Book, success, fail)
 require('./routes/createBook')(app, Book)
 require('./routes/deleteBook')(app, Book, success)
 require('./routes/updateBook')(app,Book,success, fail)
-
+require('./routes/login')(app,User,success,fail,bcrypt)
 
 //ERROR
 app.use((req,res,next)=>{
