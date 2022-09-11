@@ -1,6 +1,8 @@
+const auth = require('../auth/auth')
+
 module.exports = (app, Book, success) => {
     
-app.delete('/api/books/:id',(req,res)=>{
+app.delete('/api/books/:id',auth,(req,res)=>{
     let id = parseInt(req.params.id)
     let bookDeleted = async ()=>{
         return await Book.destroy({

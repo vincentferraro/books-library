@@ -1,5 +1,7 @@
+const auth = require('../auth/auth')
+
 module.exports = (app, Book, success, fail) => {
-    app.put('/api/books/:id', (req,res)=>{
+    app.put('/api/books/:id',auth, (req,res)=>{
 
     
     let id= parseInt(req.params.id)

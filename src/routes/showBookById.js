@@ -1,6 +1,8 @@
-module.exports = (app, Book,success,fail) => {
+const auth = require('../auth/auth')
 
-app.get('/api/books/:id',(req,res)=>{
+module.exports = (app, Book, success, fail) => {
+
+app.get('/api/books/:id',auth,(req,res)=>{
     let id = parseInt(req.params.id)
     const books = async()=> {
         return await Book.findOne({

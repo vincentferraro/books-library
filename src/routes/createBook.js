@@ -1,5 +1,7 @@
+const auth = require('../auth/auth')
+
 module.exports = (app, Book) => {
-    app.post('/api/books/',(req,res)=>{
+    app.post('/api/books/',auth,(req,res)=>{
     
     let book={...req.body}
     let bookCreated = async()=>{
