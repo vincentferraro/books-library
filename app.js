@@ -10,6 +10,8 @@ let sequelize = require('./src/db/sequelize')
 const Book = require('./src/db/sequelize').Book
 const User = require('./src/db/sequelize').User
 
+const jwt = require('jsonwebtoken')
+
 const port = 3000 
 const app = express()
 
@@ -50,12 +52,12 @@ app.use(morgan("tiny")).use((req,res,next)=>{
     
 // MODULES
 
-require('./routes/showBook')(app, Book)
-require('./routes/showBookById')(app, Book, success, fail)
-require('./routes/createBook')(app, Book)
-require('./routes/deleteBook')(app, Book, success)
-require('./routes/updateBook')(app,Book,success, fail)
-require('./routes/login')(app,User,success,fail,bcrypt)
+require('./src/routes/showBook')(app, Book)
+require('./src/routes/showBookById')(app, Book, success, fail)
+require('./src/routes/createBook')(app, Book)
+require('./src/routes/deleteBook')(app, Book, success)
+require('./src/routes/updateBook')(app,Book,success, fail)
+require('./src/routes/login')(app,User,success,fail,bcrypt)
 
 //ERROR
 app.use((req,res,next)=>{
