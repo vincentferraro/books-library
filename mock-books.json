@@ -4,7 +4,7 @@
         "author" :  "Paulo Coelho",
         "title" : "The Alchemist",
         "year" : 1988,
-        "pages" : 208,
+        "cover" : "https://m.media-amazon.com/images/I/51Z0nLAfLmL.jpg",
         "genres" : ["fantasy","adventure"]
     },
     {
@@ -12,7 +12,7 @@
         "author" :  "Paulo Coelho",
         "title" : "Manual of the Warrior of Light",
         "year" : 1997,
-        "pages" : 191,
+        "cover" : "https://images-na.ssl-images-amazon.com/images/I/81Pr9VBiqfL.jpg",
         "genres" : ["fantasy","adventure","spiritual"]
     },
     {   
@@ -20,7 +20,7 @@
         "author" :  "Jim Kwik",
         "title" : "Limitless: Upgrade Your Brain, Learn Anything Faster, and Unlock Your Exceptional Life",
         "year" : 2020,
-        "pages" : 346,
+        "cover" : "https://images-na.ssl-images-amazon.com/images/I/71NApfLNYjL.jpg",
         "genres" : ["personal development"]
     },
     {
@@ -28,7 +28,7 @@
         "author" :  "Anthony Robbins",
         "title" : "Unlimited Power",
         "year" : 1986,
-        "pages" : 604,
+        "cover" : "https://images-na.ssl-images-amazon.com/images/I/71D1Wld12iL.jpg",
         "genres" : ["personal development"]
     },
     {
@@ -36,7 +36,7 @@
         "author" :  "John Medina",
         "title" : "Brain Rules",
         "year" : 2008,
-        "pages" : 650,
+        "cover" : "https://images-na.ssl-images-amazon.com/images/I/41cRLmkN2pL.jpg",
         "genres" : ["brain","science"]
     }
     

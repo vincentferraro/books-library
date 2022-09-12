@@ -20,8 +20,8 @@ module.exports = (sequelize,DataTypes)=>{
             type : DataTypes.INTEGER,
             allowNull : false
         },
-        pages : {
-            type : DataTypes.INTEGER,
+        cover : {
+            type : DataTypes.STRING,
             allowNull : false
         },
         genres : {

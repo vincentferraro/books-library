@@ -12,43 +12,17 @@ const User = require('./src/db/sequelize').User
 
 const cors = require('cors')
 
-const port = 3000 
+const port = process.env.PORT||3000 
 const app = express()
 
 //SEQUELIZE
 
 sequelize.Connect()
-//sequelize.initDbUser()
-
-// BCRYPT
-
-/*bcrypt.hash("admin", 10, (err, hash) => {
-    if (hash) {
-        User.create({ 
-            username : "admin",
-            password : hash
-        }, {
-            raw : true, 
-            returning: true
-        }).then(res => 
-                console.log("User crée avec succès",res)
-            ).catch(rej => console.log("Erreur création User",rej) )
-        
-    } else {
-        console.log("Erreur", err)
-    }
-    
-})
-*/
 
 
 // MIDDLEWARES
 
-app.use(morgan("tiny")).use((req,res,next)=>{
-        console.log("Time:", new Date().toLocaleDateString())
-        next()
-        })
-    .use(bodyParser.json())
+app.use(bodyParser.json())
     .use(cors())
     
 // MODULES
@@ -59,6 +33,12 @@ require('./src/routes/createBook')(app, Book)
 require('./src/routes/deleteBook')(app, Book, success)
 require('./src/routes/updateBook')(app,Book,success, fail)
 require('./src/routes/login')(app,User,success,fail,bcrypt)
+
+//HEROKU
+
+app.get('/', (req, res) => {
+    res.json('Hello Heroku!!')
+})
 
 //ERROR
 app.use((req,res,next)=>{

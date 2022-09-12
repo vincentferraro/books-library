@@ -42,7 +42,7 @@ const InitDb = ()=>{
                 "author" : book.author,
                 "title" : book.title,
                 "year" : book.year,
-                "pages" : book.pages,
+                "cover" : book.cover,
                 "genres" : book.genres
             })
         })   
