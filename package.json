@@ -1,7 +1,11 @@
 {
   "name": "books-library",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "14.x",
+    "npm": "8.3.0"
+  },
   "scripts": {
     "start": "NODE_ENV=production node app.js",
     "dev": "NODE_ENV=development nodemon app.js"
@@ -20,7 +24,6 @@
     "sequelize": "^6.21.4"
   },
   "devDependencies": {
-    "morgan": "^1.10.0",
     "nodemon": "^2.0.19"
   }
 }

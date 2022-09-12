@@ -3,7 +3,7 @@ const { success, fail } = require('./helper')
 const express = require('express')
 var bodyParser = require('body-parser')
 
-const morgan = require('morgan')
+
 const bcrypt = require('bcrypt')
 
 let sequelize = require('./src/db/sequelize')
