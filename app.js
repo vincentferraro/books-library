@@ -12,6 +12,8 @@ const User = require('./src/db/sequelize').User
 
 const jwt = require('jsonwebtoken')
 
+const cors = require('cors')
+
 const port = 3000 
 const app = express()
 
@@ -49,6 +51,7 @@ app.use(morgan("tiny")).use((req,res,next)=>{
         next()
         })
     .use(bodyParser.json())
+    .use(cors())
     
 // MODULES
 
