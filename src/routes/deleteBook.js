@@ -12,7 +12,7 @@ app.delete('/api/books/:id',auth,(req,res)=>{
         })
     }
     bookDeleted()
-    res.json(success(`Livre supprimé`))
+    res.status(200).json(success(`Livre supprimé`))
 })
 
 }

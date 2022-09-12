@@ -10,8 +10,6 @@ let sequelize = require('./src/db/sequelize')
 const Book = require('./src/db/sequelize').Book
 const User = require('./src/db/sequelize').User
 
-const jwt = require('jsonwebtoken')
-
 const cors = require('cors')
 
 const port = 3000 

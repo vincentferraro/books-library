@@ -5,20 +5,17 @@ module.exports = (req, res, next) => {
     console.log(authorizationRequest)
 
     if (!authorizationRequest) {
-        res.json("Token manquant")
+        res.status(400).json("Token manquant")
     }
     const tokenRequest = authorizationRequest.split(" ")
     if (!tokenRequest[1]) {
-        res.json("Identifiant non autorisé")
+        res.status(401).json("Identifiant non autorisé")
     }
     
     jwt.verify(tokenRequest[1], 'CUSTOM_PRIVATE_KEY', (err, decode) => {
         if (err) {
             console.log(err)
-            res.json("Erreur token")
-        } else {
-            console.log(decode)
-            
+            res.status(401).json("Erreur token")
         }
     })
 

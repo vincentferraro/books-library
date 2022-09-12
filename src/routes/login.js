@@ -16,15 +16,15 @@ module.exports = (app) => {
                                                 console.log(resultat)
                                                 const token = jwt.sign({user: result.dataValues.username},'CUSTOM_PRIVATE_KEY',{expiresIn:'1d'})
                                                 const message = 'succès'
-                                                res.json({ message, result, token })
+                                                res.status(200).json({ message, result, token })
                                             } else {
-                                                res.json(fail(`Identifiant ou mot de passe invalide`))
+                                                res.status(401).json(fail(`Identifiant ou mot de passe invalide`))
                                             }
                                             
                                         })
                                         
                 
                         })
-                    .catch(rej => res.json(fail("Identifiant invalide",rej)))
+                    .catch(rej => res.status(401).json(fail("Identifiant invalide",rej)))
     })
 }

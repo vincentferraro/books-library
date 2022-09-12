@@ -21,10 +21,10 @@ module.exports = (app, Book) => {
     
     bookCreated().then( value =>
                 { console.log(value)
-                    res.json(value)
+                    res.status(200).json(value)
                 })
                 .catch( err => {console.log(err)
-                                res.json(err)})
+                                res.status(400).json(err)})
 })
 
 }
