@@ -14,7 +14,7 @@ module.exports = (app, Book, success, fail) => {
             author : bookToUpdate.author,
             title : bookToUpdate.title,
             year : bookToUpdate.year,
-            pages : bookToUpdate.pages,
+            cover : bookToUpdate.cover,
             genres : bookToUpdate.genres
         },{
             returning : true,
