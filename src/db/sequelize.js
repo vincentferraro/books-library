@@ -4,9 +4,24 @@ const userModel = require('../models/User')
 
 const books = require('../../mock-books.json')
 
+let sequelize
 
-
- let sequelize = new Sequelize(
+if (process.env.NODE_ENV === 'production') {
+    sequelize = new Sequelize(
+        'dpwdfwjmvmbgutgf',
+        'qtz4zu8olknorqsm',
+        'q3e0v0s1kkcne27j',
+        {
+            host : 'iu51mf0q32fkhfpl.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+            dialect : 'mariadb',
+            dialectOptions : {
+                timezone : 'Etc/GMT-2'
+            },
+            logging : true
+        }   
+        )
+} else {
+    sequelize = new Sequelize(
         'books_library',
         'username',
         ' ',
@@ -17,9 +32,10 @@ const books = require('../../mock-books.json')
                 timezone : 'Etc/GMT-2'
             },
             logging : false
-        },
-    
-)
+        }   
+        )
+}
+ 
         
     
 
@@ -35,7 +51,7 @@ const books = require('../../mock-books.json')
 const Book=bookModel(sequelize, DataTypes)
 
 const InitDb = ()=>{
-    Book.sync({ force : true}).then(()=>{
+    Book.sync().then(()=>{
         
         books.map((book)=>{
             Book.create({
@@ -55,7 +71,7 @@ const InitDb = ()=>{
 const User = userModel(sequelize,DataTypes)
 
 const initDbUser = () => {
-    User.sync({ force: true }).then(e => console.log(`Table User crée avec succès`,e))
+    User.sync().then(e => console.log(`Table User crée avec succès`,e))
                                 .catch( err => console.log(`Erreur lors de la création de la table`,err))
     
 }

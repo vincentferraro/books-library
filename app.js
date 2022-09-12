@@ -18,8 +18,8 @@ const app = express()
 //SEQUELIZE
 
 sequelize.Connect()
-
-
+sequelize.InitDb()
+sequelize.initDbUser()
 // MIDDLEWARES
 
 app.use(bodyParser.json())
