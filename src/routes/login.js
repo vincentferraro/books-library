@@ -1,17 +1,19 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const success = require('../../helper').success
+
 const fail = require('../../helper').fail
 const User = require('../db/sequelize').User
 
 module.exports = (app) => {
     app.post('/api/login', (req, res) => {
-        
-        User.findOne({ where: {username: req.body.surname}})
+        console.log('appel post')
+        console.log(req.body.username)
+        User.findOne({raw:true, where: {username: req.body.username}})
                     .then(result => {
-                        
+                            console.log(result)
                                     bcrypt.compare(req.body.password, result.dataValues.password)
                                         .then(resultat => {
+                                            console.log('appel 2')
                                             if (resultat) {
                                                 console.log(resultat)
                                                 const token = jwt.sign({user: result.dataValues.username},'CUSTOM_PRIVATE_KEY',{expiresIn:'1d'})

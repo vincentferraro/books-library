@@ -5,7 +5,6 @@ const userModel = require('../models/User')
 const books = require('../../mock-books.json')
 
 let sequelize
-
 if (process.env.NODE_ENV === 'production') {
     sequelize = new Sequelize(
         'dpwdfwjmvmbgutgf',
